@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    message = "Hello, World"
+    message = "Hello, World - MySQL"
     return render_template('index.html', message=message)
 
 @app.route("/buscar")
