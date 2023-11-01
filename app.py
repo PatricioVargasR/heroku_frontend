@@ -11,3 +11,6 @@ def index():
 @app.route("/buscar")
 def buscar():
     return render_template('buscar.html')
+
+if __name__ == "__main__":
+    app.run()
