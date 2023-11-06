@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title>Buscar contacto</title>
-    </head>
-    <body>
-        <h1>Buscar contacto</h1>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos</title>
+    <script type="text/javascript" src="../static/js/get_one.js"></script>
+</head>
+
+<body>
+    <a href="index.html">Inicio</a>
+    <form id="search-form">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <button type="button" onclick="searchContact()">Buscar</button>
+    </form>
+    <table border="1" id="table_contactos">
+        <thead id="thead_contactos">
+            <th>Email</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+        </thead>
+        <tbody id="tbody_contactos">
+            <tr>
+                <td colspan="3">Escribe un correo electrónico y haz clic en "Buscar" para encontrar un contacto.</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function searchContact() {
+            var emailInput = document.getElementById("email");
+            var email = emailInput.value;
+            getForEmail(email);
+        }
+    </script>
+</body>
 </html>
