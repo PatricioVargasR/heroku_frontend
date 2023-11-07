@@ -7,17 +7,27 @@
     <title>Document</title>
 </head>
 <body>
-    <center><h1>Actualizar</h1>
+    <center><h1>Editar</h1>
+    <hr size="10" color="black">
     <form id="insert-form" name="insert-form">
-
-        <input type="text" id="emailInput" name="email" placeholder="Email" style="display: none;">
-        <input type="text" id="nombreInput" name="nombre" placeholder="Nombre">
-        <input type="text" id="telefonoInput" name="telefono" placeholder="Teléfono">        
+        <p>
+        <label for="email">Email:</label>
+       <!-- <input type="text" id="emailInput" name="email" style="display: none;">-->
+       <input type="text" id="emailInput" name="email">
+        </p>
+        <p>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombreInput" name="nombre" >
+        </p>
+        <p>
+        <label for="telefono">Telefono:</label>
+        <input type="text" id="telefonoInput" name="telefono">
+        </p>
         <p>
             <button type="button" onclick="updateContact()">Enviar</button>
+            <a href="index.html">Regresar</a>
         </p>
     </form>
-    <a href="index.html">Regresar</a>
 </center>
 <script>
     function updateContact() {

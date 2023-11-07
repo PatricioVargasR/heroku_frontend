@@ -8,7 +8,14 @@
     </head>
     <body>
         <center>
-        <h1><b>Contactos</b></h1>
+            <div id="menu">
+                <h1>Contactos</h1>
+                <a href="buscar.html">Buscar</a>
+                <a href="insertar.html">Insertar</a>
+            </div>
+
+        <hr size="10" color="black">
+        <br>
         <table border="1" id="table_contactos">
             <thead id="thead_contactos">
                 <th>Email</th>
@@ -19,14 +26,9 @@
             <tbody id="tbody_contactos">
             </tbody>
         </table>
-        <p><h3><i>Acciones:</i></h3>
-            <a href="buscar.html">Buscar</a>
-            <a href="insertar.html">Insertar</a></p>
     </center>
         <script>
             document.body.onload = getAll();
-            function mi_funcion(){
-            }
         </script>
     </body>
 </html>
