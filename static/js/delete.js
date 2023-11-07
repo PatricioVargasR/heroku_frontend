@@ -33,10 +33,12 @@ function deleteData(email){
 
     request.onload = function () {
 
-        if (request.readyState == 4 && request.status == "200") {
+        if (request.readyState == 4 && request.status == 200) {
             alert("Borrado con exito");
+            // Redirigir a la página principal (index.html)
+            window.location.href = 'index.html';
         } else {
-            alert("Ocurrión un error");
+            alert("Ocurrió un error");
         }
     }
     request.send(null);

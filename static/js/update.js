@@ -43,6 +43,7 @@ function updateData(email, nombre, telefono) {
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             alert(request.responseText);
+            window.location.href = 'index.html';
         }
     }
 

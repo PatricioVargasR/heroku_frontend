@@ -14,6 +14,9 @@ function insertData(nombre, telefono, email) {
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             alert(request.responseText);
+
+            // Redirigir a la página principal (index.html)
+            window.location.href = 'index.html';
         }
     }
 

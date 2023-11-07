@@ -37,6 +37,8 @@
             var emailInput = document.getElementById("email");
             var email = emailInput.value;
             getForEmail(email);
+                // Limpiar el campo de entrada después de obtener el valor
+            emailInput.value = "";
         }
     </script>
 </body>
