@@ -6,20 +6,27 @@
         <title>Contactos</title>
         <script type="text/javascript" src="../static/js/get_all.js"></script>
     </head>
-
     <body>
-        <a href="buscar.html">Buscar</a>
+        <center>
+        <h1><b>Contactos</b></h1>
         <table border="1" id="table_contactos">
             <thead id="thead_contactos">
                 <th>Email</th>
                 <th>Nombre</th>
                 <th>Teléfono</th>
+                <th>Opciones</th>
             </thead>
             <tbody id="tbody_contactos">
             </tbody>
         </table>
+        <p><h3><i>Acciones:</i></h3>
+            <a href="buscar.html">Buscar</a>
+            <a href="insertar.html">Insertar</a></p>
+    </center>
         <script>
             document.body.onload = getAll();
+            function mi_funcion(){
+            }
         </script>
     </body>
 </html>

@@ -1,7 +1,7 @@
 function getAll() {
     var request = new XMLHttpRequest();
-    //request.open('GET', "http://localhost:8000/contactos");
-    request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos");
+    request.open('GET', "http://localhost:8000/contactos");
+    //request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos");
     request.send();
 
     request.onload = (e) => {
@@ -20,14 +20,19 @@ function getAll() {
             var td_email = document.createElement("td");
             var td_nombre = document.createElement("td");
             var td_telefono = document.createElement("td");
+            var td_opciones = document.createElement("td");
+
 
             td_email.innerHTML = contacto["email"];
             td_nombre.innerHTML = contacto["nombre"];
             td_telefono.innerHTML = contacto["telefono"];
+            td_opciones.innerHTML = "<a href='ver.html?email=" + contacto["email"] + "'>Ver</a> <a href='editar.html?email=" + contacto["email"] + "'>Editar</a> <a href='borrar.html?email="+ contacto["email"]+"'>Borrar</a>";
+
 
             tr.appendChild(td_email);
             tr.appendChild(td_nombre);
             tr.appendChild(td_telefono);
+            tr.appendChild(td_opciones);
 
             tbody_contactos.appendChild(tr);
         }

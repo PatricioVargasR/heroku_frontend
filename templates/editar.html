@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../static/js/update.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <center><h1>Actualizar</h1>
+    <form id="insert-form" name="insert-form">
+
+        <input type="text" id="emailInput" name="email" placeholder="Email" style="display: none;">
+        <input type="text" id="nombreInput" name="nombre" placeholder="Nombre">
+        <input type="text" id="telefonoInput" name="telefono" placeholder="Teléfono">        
+        <p>
+            <button type="button" onclick="updateContact()">Enviar</button>
+        </p>
+    </form>
+    <a href="index.html">Regresar</a>
+</center>
+<script>
+    function updateContact() {
+        var nombreInput = document.getElementById("nombreInput");
+        var telefonoInput = document.getElementById("telefonoInput");
+        var emailInput = document.getElementById("emailInput");
+        var email = emailInput.value;
+        var telefono = telefonoInput.value;
+        var nombre = nombreInput.value;
+        updateData(email, nombre, telefono);
+        //updateData(telefono, nombre)
+    }
+</script>
+</body>
+</html>

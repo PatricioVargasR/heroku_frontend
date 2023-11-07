@@ -8,12 +8,15 @@
 </head>
 
 <body>
-    <a href="index.html">Inicio</a>
+    <center>
+    <h1><b>Buscar Contacto</b></h1>
     <form id="search-form">
         <label for="email">Email:</label>
         <input type="text" id="email" name="email">
         <button type="button" onclick="searchContact()">Buscar</button>
     </form>
+    <hr size="10" color="black">
+    <br>
     <table border="1" id="table_contactos">
         <thead id="thead_contactos">
             <th>Email</th>
@@ -26,6 +29,9 @@
             </tr>
         </tbody>
     </table>
+    <br>
+    <a href="index.html">Regresar</a>
+</center>
     <script>
         function searchContact() {
             var emailInput = document.getElementById("email");

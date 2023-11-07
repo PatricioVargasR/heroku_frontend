@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contactos</title>
+        <script type="text/javascript" src="../static/js/delete.js"></script>
+    </head>
+
+    <body>
+        <center><h1>Contacto</h1></center>
+        <a href="index.html">Cancelar</a>
+        <button type="button" onclick="deleteContact()">Aceptar</button>
+        <div id="detalle"></div>
+    </body>
+    <script>
+        function deleteContact() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        deleteData(email);
+    }
+    </script>
+</html>
+

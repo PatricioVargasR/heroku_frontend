@@ -5,12 +5,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    message = "Hello, World"
-    return render_template('index.html', message=message)
+    return render_template('index.html')
 
 @app.route("/buscar")
 def buscar():
     return render_template('buscar.html')
 
-if __name__ == "__main__":
-    app.run()
+@app.route("/prueba", methods=["GET", "POST"])
+def prueba():
+    """Pagina para probar DOM"""
+    return render_template('prueba.html')
+
+#if __name__ == '__name__':
+#    app.run()
