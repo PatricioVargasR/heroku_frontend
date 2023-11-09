@@ -6,6 +6,7 @@ function getContactById(email) {
     // Realiza una solicitud para obtener el registro por su ID, por ejemplo:
     const request = new XMLHttpRequest();
     request.open('GET', "http://localhost:8000/contactos/" + email);
+    //request.open('GET',  "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     request.send();
 
     request.onload = (e) => {

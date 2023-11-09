@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../static/js/insert.js"></script>
     <title>Document</title>
+    <style>
+    </style>
 </head>
 <body>
     <center><h1>Insertar</h1>
@@ -12,16 +14,15 @@
     <form id="insert-form" name="insert-form">
         <p>
         <label for="email">Email:</label>
-        <input type="text" id="nombre" name="nombre">
+        <input type="text" id="email" name="email">
         </p>
         <p>
-        <label for="email">Telefono:</label>
-        <input type="text" id="telefono" name="telefono"  >
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre"  name="nombre" >
         </p>
         <p>
-        <label for="email">Nombre:</label>
-        <input type="text" id="email"  name="email" >
-        </p>
+            <label for="telefono">Telefono:</label>
+            <input type="text" id="telefono" name="telefono">
         <p>
             <button type="button" onclick="insertContact()">Enviar</button>
             <a href="index.html">Regresar</a>
@@ -31,13 +32,13 @@
 </center>
 <script>
     function insertContact() {
+        var emailInput = document.getElementById("email");
         var nombreInput = document.getElementById("nombre");
         var telefonoInput = document.getElementById("telefono");
-        var emailInput = document.getElementById("email");
         var email = emailInput.value;
-        var telefono = telefonoInput.value;
         var nombre = nombreInput.value;
-        insertData(nombre, telefono, email);
+        var telefono = telefonoInput.value;
+        insertData(email, nombre, telefono);
     }
 </script>
 </body>

@@ -5,15 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../static/js/update.js"></script>
     <title>Document</title>
+    <style>
+        input:read-only{
+            background-color: aliceblue;
+            width: 220px;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <center><h1>Editar</h1>
     <hr size="10" color="black">
     <form id="insert-form" name="insert-form">
         <p>
-        <label for="email">Email:</label>
-       <!-- <input type="text" id="emailInput" name="email" style="display: none;">-->
-       <input type="text" id="emailInput" name="email">
+        <label for="email">Registro:</label>
+        </p>
+        <p>
+        <input type="text" id="emailInput" name="email" readonly>
+       <!--<input type="text" id="emailInput" name="email">-->
         </p>
         <p>
         <label for="nombre">Nombre:</label>
