@@ -38,7 +38,7 @@ function deleteData(email){
         if (request.readyState == 4 && request.status == 200) {
             alert("Borrado con exito");
             // Redirigir a la página principal (index.html)
-            window.location.href = 'index.html';
+            window.location.href = '/';
         } else {
             alert("Ocurrió un error");
         }

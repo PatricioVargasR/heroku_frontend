@@ -21,7 +21,7 @@ function insertData(email, nombre, telefono) {
             console.log(data)
 
             // Redirigir a la página principal (index.html)
-            window.location.href = 'index.html';
+            window.location.href = '/';
         }
     }
 
