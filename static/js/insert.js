@@ -1,15 +1,15 @@
 function insertData(email, nombre, telefono) {
 
     var request = new XMLHttpRequest();
-    //var url = "http://localhost:8000/contactos/";
-    var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos"
+    var url = "http://localhost:8000/contactos/";
+    //var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos"
 
     var data = {
         email: email,
         nombre: nombre,
         telefono: telefono
     };
-    
+
     //alert(JSON.stringify(data));
 
     request.open('POST', url, true);

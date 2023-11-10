@@ -1,8 +1,8 @@
 function getForEmail() {
     var email = document.getElementById("email").value;
     var request = new XMLHttpRequest();
-    //var url = "http://localhost:8000/contactos/" + encodeURIComponent(email);
-    var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + encodeURIComponent(email);
+    var url = "http://localhost:8000/contactos/" + encodeURIComponent(email);
+    //var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + encodeURIComponent(email);
     request.open('GET', url);
     request.send();
 

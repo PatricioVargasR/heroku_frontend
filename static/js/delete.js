@@ -5,8 +5,8 @@ const email = urlParams.get('email');
 function getContactById(email) {
     // Realiza una solicitud para obtener el registro por su ID, por ejemplo:
     const request = new XMLHttpRequest();
-    //request.open('GET', "http://localhost:8000/contactos/" + email);
-    request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
+    request.open('GET', "http://localhost:8000/contactos/" + email);
+    //request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     request.send();
 
     request.onload = (e) => {
@@ -30,8 +30,8 @@ getContactById(email);
 function deleteData(email){
 
     const request = new XMLHttpRequest();
-    //request.open('DELETE', "http://localhost:8000/contactos/" + email, true);
-    request.open('DELETE', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email, true);
+    request.open('DELETE', "http://localhost:8000/contactos/" + email, true);
+    //request.open('DELETE', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email, true);
 
     request.onload = function () {
 
