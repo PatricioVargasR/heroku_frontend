@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../static/js/update.js"></script>
     <title>Document</title>
     <style>
-        input:read-only{
+        input:read-only {
             background-color: aliceblue;
             width: 220px;
             height: 30px;
@@ -15,41 +15,66 @@
     </style>
 </head>
 <body>
-    <center><h1>Editar</h1>
-    <hr size="10" color="black">
-    <form id="insert-form" name="insert-form">
-        <p>
-        <label for="email">Registro:</label>
-        </p>
-        <p>
-        <input type="text" id="emailInput" name="email" readonly>
-       <!--<input type="text" id="emailInput" name="email">-->
-        </p>
-        <p>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombreInput" name="nombre" >
-        </p>
-        <p>
-        <label for="telefono">Telefono:</label>
-        <input type="text" id="telefonoInput" name="telefono">
-        </p>
-        <p>
-            <button type="button" onclick="updateContact()">Enviar</button>
-            <a href="/">Regresar</a>
-        </p>
-    </form>
-</center>
-<script>
-    function updateContact() {
-        var nombreInput = document.getElementById("nombreInput");
-        var telefonoInput = document.getElementById("telefonoInput");
-        var emailInput = document.getElementById("emailInput");
-        var email = emailInput.value;
-        var telefono = telefonoInput.value;
-        var nombre = nombreInput.value;
-        updateData(email, nombre, telefono);
-        //updateData(telefono, nombre)
-    }
-</script>
+    <center>
+        <h1>Editar</h1>
+        <hr size="10" color="black">
+        <form id="insert-form" name="insert-form">
+            <p>
+                <label for="email">Registro:</label>
+            </p>
+            <p>
+                <input type="text" id="emailInput" name="email" readonly>
+            </p>
+            <p>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombreInput" name="nombre">
+            </p>
+            <p>
+                <label for="telefono">Telefono:</label>
+                <input type="text" id="telefonoInput" name="telefono">
+            </p>
+            <p>
+                <button type="button" onclick="updateContact()">Enviar</button>
+                <a href="/">Regresar</a>
+            </p>
+        </form>
+    </center>
+
+    <script>
+        function updateContact() {
+            var nombreInput = document.getElementById("nombreInput");
+            var telefonoInput = document.getElementById("telefonoInput");
+            var emailInput = document.getElementById("emailInput");
+            var email = emailInput.value;
+            var telefono = telefonoInput.value;
+            var nombre = nombreInput.value;
+            updateData(email, nombre, telefono);
+        }
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error checking server status:', errorData);
+                    document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('statusMessage').innerText = 'Error checking server status';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkServerStatus);
+    </script>
 </body>
 </html>

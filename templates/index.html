@@ -12,24 +12,38 @@
                 <h1>Contactos</h1>
                 <a href="/buscar">Buscar</a>
                 <a href="/insertar">Insertar</a>
+                <p><a href="/sesion" id="sesionLink">Iniciar sesión</a></p>
+                <p><a href="/nuevo">Crear Cuenta</a></p>
             </div>
 
-        <hr size="10" color="black">
-        <br>
-        <table border="1" id="table_contactos">
-            <thead id="thead_contactos">
-                <th>Email</th>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Opciones</th>
-            </thead>
-            <tbody id="tbody_contactos">
-            </tbody>
-        </table>
-    </center>
+            <hr size="10" color="black">
+            <br>
+            <table border="1" id="table_contactos">
+                <thead id="thead_contactos">
+                    <th>Email</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Opciones</th>
+                </thead>
+                <tbody id="tbody_contactos">
+                </tbody>
+            </table>
+        </center>
         <script>
-            document.body.onload = getAll();
+            // Pasamos la referencia de la función, no llamamos a la función aquí
+            document.body.onload = getAll;
+
+            document.addEventListener('DOMContentLoaded', function() {
+            var sesionLink = document.getElementById('sesionLink');
+
+            // Simula la condición de sesión abierta (puedes ajustar esto según tus necesidades)
+            var sesionAbierta = true;
+
+            if (sesionAbierta) {
+                sesionLink.href = "/sesion";
+                sesionLink.textContent = "Cerrar sesión";
+            }
+        });
         </script>
     </body>
 </html>
-

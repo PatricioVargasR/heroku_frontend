@@ -34,7 +34,13 @@ def prueba():
     """Pagina para probar DOM"""
     return render_template('prueba.html')
 
+@app.route("/sesion", methods = ["GET", "POST"])
+def sesion():
+    return render_template("sesion.html")
 
+@app.route("/nuevo", methods=["GET", "POST"])
+def cuenta():
+    return render_template("nuevo_usuario.html")
 
 
 #if __name__ == '__name__':

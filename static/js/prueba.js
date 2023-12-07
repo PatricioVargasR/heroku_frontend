@@ -1,6 +1,7 @@
 function getContactoEmail(email) {
     var request = new XMLHttpRequest();
     request.open('GET', "http://localhost:8000/contactos/" + email);
+    request.setRequestHeader('Authorization', 'Bearer' + sessionStorage.getItem('token'));
     // request.open('GET', "https://herokubackend-605c0ee15b4e.herokuapp.com/contactos?email=" + email);
     request.send();
 

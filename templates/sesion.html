@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <center>
+    <form id="loginForm">
+        <br>
+        <h1>Iniciar sesión</h1>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <p><label for="password">Password:</label>
+        <input type="password" id="password" name="password"></p>
+        <p><button type="button" onclick="login()">Iniciar sesión</button></p>
+        <hr size="10" color="black">
+    </form>
+    <br>
+    <h1>Cerrar sesión</h1>
+    
+    <button type="button" onclick="logout()">Cerrar Sesión</button>
+</center>
+    <script>
+        async function login() {
+            const sesionExistente = sessionStorage.getItem('token');
+
+            if (sesionExistente){
+                alert('Ya iniciaste sesión');
+                return;
+            }
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('http://127.0.0.1:8000/token/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Basic ' + btoa(`${email}:${password}`)
+                }
+            });
+
+            // Verificar si la autenticación fue exitosa
+            if (response.ok) {
+                // Almacenar el token en sessionStorage
+                const data = await response.json();
+                sessionStorage.setItem('token', data.token);
+                window.location.href = '/';
+            } else {
+                // Manejar el caso en el que la autenticación falla
+                console.error('Error en la autenticación');
+            }
+        }
+
+        function logout() {
+            // Eliminar el token almacenado en sessionStorage
+            sessionStorage.removeItem('token');
+            alert('Sesión cerrada');
+        }
+    </script>
+</body>
+</html>

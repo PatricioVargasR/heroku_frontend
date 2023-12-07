@@ -8,19 +8,50 @@
     </head>
 
     <body>
-        <center><h1>Contacto</h1>
-        <hr size="10" color="black">
-        <div id="detalle"></div>
-        <button type="button" onclick="deleteContact()">Borrar</button>
-        <a href="/">Cancelar</a>
+        <center>
+            <h1>Contacto</h1>
+            <hr size="10" color="black">
+            <div id="detalle"></div>
+            <button type="button" onclick="deleteContact()">Borrar</button>
+            <a href="/">Cancelar</a>
         </center>
     </body>
     <script>
         function deleteContact() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const email = urlParams.get('email');
-        deleteData(email);
-    }
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            deleteData(email);
+        }
+
+        function handleServerError(error) {
+            console.error('Error en la solicitud:', error.message || error.statusText);
+            document.getElementById('statusMessage').innerText = 'Error al procesar la solicitud';
+        }
+
+        // Función para realizar una solicitud a la raíz del servidor
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+                });
+
+                console.log(sessionStorage.getItem('token'))
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
+                } else {
+                    handleServerError(response);
+                }
+            } catch (error) {
+                handleServerError(error);
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        window.onload = checkServerStatus;
     </script>
 </html>
-
