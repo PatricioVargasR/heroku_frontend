@@ -49,7 +49,9 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 });
-
+                if (response.status === 401){
+                    window.location.href = "/sesion";
+                }
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;

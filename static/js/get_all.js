@@ -1,7 +1,7 @@
 const SERVER_URL = "http://localhost:8000";
 const CONTACTS_ENDPOINT = "/contactos";
 
-function getAll() {
+async function getAll() {
     const token = sessionStorage.getItem('token');
 
     if (!token) {
@@ -11,24 +11,50 @@ function getAll() {
         return;
     }
 
-    checkServerStatus();
+    try {
+        const serverStatusResponse = await checkServerStatus();
 
+        if (serverStatusResponse.status === 200) {
+            const contactsResponse = await fetchContacts(token);
+
+            if (contactsResponse.status === 200) {
+                handleContactsResponse(contactsResponse.responseText);
+            } else {
+                handleErrorResponse(contactsResponse.status, contactsResponse.statusText);
+            }
+        } else if(serverStatusResponse.status === 401){
+            window.location.href = "/sesion";
+            return alert("Token Invalido");
+
+        }else{
+            handleErrorResponse(serverStatusResponse.status, serverStatusResponse.statusText);
+
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('statusMessage').innerText = 'Error checking server status';
+    }
+}
+
+async function fetchContacts(token) {
     const request = new XMLHttpRequest();
     request.open('GET', `${SERVER_URL}${CONTACTS_ENDPOINT}`);
     request.setRequestHeader('Authorization', `Bearer ${token}`);
-    request.onload = () => {
-        if (request.status === 200) {
-            handleContactsResponse(request.responseText);
-        } else {
-            handleErrorResponse(request.status, request.statusText);
+
+    return new Promise((resolve, reject) => {
+        request.onload = () => resolve(request);
+        request.onerror = (error) => reject(error);
+        request.send();
+    });
+}
+
+function checkServerStatus() {
+    return fetch(`${SERVER_URL}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
-    };
-
-    request.onerror = (error) => {
-        console.error('Error de red o CORS:', error);
-    };
-
-    request.send();
+    });
 }
 
 function handleContactsResponse(response) {
@@ -66,28 +92,6 @@ function createOptionsCell(email) {
 function handleErrorResponse(status, statusText) {
     console.error(`Error: ${status} - ${statusText}`);
     // Puedes agregar código para mostrar mensajes de error en la interfaz de usuario
-}
-
-async function checkServerStatus() {
-    try {
-        const response = await fetch(`${SERVER_URL}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-            }
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
-        } else {
-            handleErrorResponse(response.status, response.statusText);
-            document.getElementById('statusMessage').innerText = 'Error checking server status';
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('statusMessage').innerText = 'Error checking server status';
-    }
 }
 
 // Llamar a la función al cargar la página
