@@ -1,9 +1,39 @@
 const SERVER_URL = "http://localhost:8000";
-const CONTACTS_ENDPOINT = "/contactos";
+const CONTACTS_ENDPOINT = "/actualizar_contactos"
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const email = urlParams.get('email');
 
-console.log(email);
+checarStatus();
+
+async function checarStatus(){
+    respuestaServidor = await fetch(`${SERVER_URL}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        }
+    });
+
+
+    try{
+
+        if (respuestaServidor.status === 200){
+            // Llama a la función para obtener y mostrar el registro
+            getContactById(email);
+
+        } else if (respuestaServidor.status === 401){
+            window.location.href = "/sesion";
+            return alert("Token invalido");
+        } else {
+            manejarRespuestaError(respuestaServidorStatus.status, respuestaServidorStatus.statusText);
+        }
+    } catch (error) {
+        console.error("Error", error);
+        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+    }
+}
+
 
 function getContactById(email) {
     console.log(email);
@@ -33,7 +63,7 @@ function getContactById(email) {
             nombreInput.value = contacto.nombre;
             telefonoInput.value = contacto.telefono;
         } else {
-            handleErrorResponse(request.status, request.statusText);
+            manejarRespuestaError(request.status, request.statusText);
         }
     };
 
@@ -44,7 +74,6 @@ function getContactById(email) {
     request.send();
 }
 
-getContactById(email);
 
 
 function updateData(email, nombre, telefono) {
@@ -74,10 +103,16 @@ function updateData(email, nombre, telefono) {
                 alert(request.responseText);
                 window.location.href = '/';
             } else {
-                handleErrorResponse(request.status, request.statusText);
+                manejarRespuestaError(request.status, request.statusText);
             }
         }
     };
 
     request.send(JSON.stringify(data));
+}
+
+
+function manejarRespuestaError(status, statusText){
+    console.error(`Error: ${status} - ${statusText}`);
+
 }

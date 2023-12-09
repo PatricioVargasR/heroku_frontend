@@ -1,6 +1,40 @@
 // Obtén el parámetro 'id' de la URL
+const SERVER_URL = "http://localhost:8000";
+
+
+// Obtén el parámetro 'id' de la URL
 const urlParams = new URLSearchParams(window.location.search);
 const email = urlParams.get('email');
+
+checarStatus();
+
+async function checarStatus(){
+    respuestaServidor = await fetch(`${SERVER_URL}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        }
+    });
+
+
+    try{
+
+        if (respuestaServidor.status === 200){
+            // Llama a la función para obtener y mostrar el registro
+            getContactById(email);
+
+
+        } else if (respuestaServidor.status === 401){
+            window.location.href = "/sesion";
+            return alert("Token invalido");
+        } else {
+            manejarRespuestaError(respuestaServidorStatus.status, respuestaServidorStatus.statusText);
+        }
+    } catch (error) {
+        console.error("Error", error);
+        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+    }
+}
 
 // Función para obtener un solo registro por su ID
 function getContactById(email) {
@@ -37,9 +71,6 @@ function getContactById(email) {
         }
     };
 }
-
-// Llama a la función para obtener y mostrar el registro
-getContactById(email);
 
 function deleteData(email) {
     const token = sessionStorage.getItem('token');

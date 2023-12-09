@@ -17,18 +17,38 @@
         </center>
     </body>
     <script>
-        function deleteContact() {
+        async function deleteContact() {
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get('email');
-            deleteData(email);
+
+            verificar = await checarStatus();
+
+            if (verificar.status === 200){
+                deleteData(email);
+
+            } else if(verificar.status === 401){
+                window.location.href == "/sesion";
+                return alert("Token invalido");
+            } else {
+                return alert("Ocurrio un error");
+            }
         }
+
+        function checarStatus(){
+            return fetch('http://127.0.0.1:8000/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+        }
+
 
         function handleServerError(error) {
             console.error('Error en la solicitud:', error.message || error.statusText);
             document.getElementById('statusMessage').innerText = 'Error al procesar la solicitud';
         }
 
-        // Función para realizar una solicitud a la raíz del servidor
         async function checkServerStatus() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/', {
@@ -37,23 +57,24 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 });
-
-                console.log(sessionStorage.getItem('token'))
                 if (response.status === 401){
                     window.location.href = "/sesion";
                 }
+
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
                 } else {
-                    handleServerError(response);
+                    const errorData = await response.json();
+                    console.error('Error checking server status:', errorData);
+                    document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
                 }
             } catch (error) {
-                handleServerError(error);
+                console.error('Error:', error);
+                document.getElementById('statusMessage').innerText = 'Error checking server status';
             }
         }
 
-        // Llamar a la función al cargar la página
-        window.onload = checkServerStatus;
+        document.addEventListener('DOMContentLoaded', checkServerStatus);
     </script>
 </html>

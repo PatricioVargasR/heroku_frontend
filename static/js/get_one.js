@@ -1,53 +1,106 @@
-function getForEmail() {
+const SERVER_URL = "http://localhost:8000";
+const ENDPOINT = "/contactos/"
+
+async function getForEmail(){
     var email = document.getElementById("email").value;
     const token = sessionStorage.getItem('token');
 
-    if (!token) {
-        console.error('Token not found. Redirecting to login page.');
-        window.location.href = '/sesion';
+    if(!token){
+        console.error("No se encontró un token, Redireccionando a la página de sesión");
+        window.location.href ="/sesion";
         return;
     }
 
-    var request = new XMLHttpRequest();
-    var url = "http://localhost:8000/contactos/" + encodeURIComponent(email);
-    // var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + encodeURIComponent(email);
+    try {
+        const respuestaServidorStatus = await checarStatus();
 
-    request.open('GET', url);
-    request.setRequestHeader('Authorization', `Bearer ${token}`);
-    request.send();
 
-    request.onload = function () {
-        if (request.status === 200) {
-            const json = JSON.parse(request.responseText);
-            console.log("response: " + JSON.stringify(json));
-            console.log("status_code: " + request.status);
+        if (respuestaServidorStatus.status === 200){
+            var respuestaContactos = await fetchContacts(email, token);
 
-            var tbody_contactos = document.getElementById("tbody_contactos");
-            tbody_contactos.innerHTML = ''; // Limpiamos el contenido previo en cualquier caso
+            // Error
+            console.log(respuestaContactos)
+            console.log(respuestaContactos.status);
 
-            var tr = document.createElement("tr");
-            var td_email = document.createElement("td");
-            var td_nombre = document.createElement("td");
-            var td_telefono = document.createElement("td");
-
-            td_email.innerHTML = json["email"];
-            td_nombre.innerHTML = json["nombre"];
-            td_telefono.innerHTML = json["telefono"];
-
-            tr.appendChild(td_email);
-            tr.appendChild(td_nombre);
-            tr.appendChild(td_telefono);
-
-            tbody_contactos.appendChild(tr);
-        } else if (request.status === 404) {
-            var tbody_contactos = document.getElementById("tbody_contactos");
-            tbody_contactos.innerHTML = '<tr><td colspan="3">No se encontró ningún contacto con ese email.</td></tr>';
+            if (respuestaContactos.status === 200){
+                manejearRespuestaContactos(respuestaContactos.responseText);
+            } else if(respuestaContactos.status === 404){
+                var tbody_contactos = document.getElementById("tbody_contactos");
+                tbody_contactos.innerHTML = '<tr><td colspan="3">No se encontró ningún contacto con ese email.</td></tr>';
+            } else {
+                manejarRespuestaError(respuestaContactos.status, respuestaContactos.statusText);
+            }
+        } else if (respuestaServidorStatus.status == 401){
+            window.location.href = "/sesion";
+            return alert("Token Invalido");
         } else {
-            console.error("Error en la solicitud:", request.status, request.statusText);
+            manejarRespuestaError(respuestaServidorStatus.status, respuestaServidorStatus.statusText);
         }
-    };
+    } catch(error){
+        console.error("Error", error);
+        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+    }
+}
 
-    request.onerror = function () {
-        console.error('Error de red o CORS');
-    };
+async function fetchContacts(email, token){
+    const request = new XMLHttpRequest();
+    request.open("GET",`${SERVER_URL}${ENDPOINT}${email}`);
+    request.setRequestHeader('Authorization', `Bearer ${token}`);
+
+    return new Promise((resolve, reject) => {
+        request.onload = () => resolve(request);
+        request.onerror = (error) => reject(error);
+        request.send();
+        console.log(request);
+
+    });
+
+
+}
+
+function checarStatus(){
+    return fetch(`${SERVER_URL}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        }
+    });
+}
+
+function manejearRespuestaContactos(respuestaContactos){
+    try {
+        const json = JSON.parse(respuestaContactos);
+        console.log(json);
+        console.log("response: " + JSON.stringify(json));
+
+
+        var tbody_contactos = document.getElementById("tbody_contactos");
+        tbody_contactos.innerHTML = ''; // Limpiamos el contenido previo en cualquier caso
+
+        
+        var tr = document.createElement("tr"); // Agregado para definir la variable tr
+
+        tr.appendChild(crearCeldaTabla(json["email"]))
+        tr.appendChild(crearCeldaTabla(json["nombre"]))
+        tr.appendChild(crearCeldaTabla(json["telefono"]))
+
+
+        tbody_contactos.appendChild(tr);
+
+    } catch (error){
+        console.error('Error al parsing JSON:', error)
+
+    }
+
+}
+
+function crearCeldaTabla(value){
+    const td = document.createElement("td");
+    td.textContent = value;
+    return td
+}
+
+function manejarRespuestaError(status, statusText){
+    console.error(`Error: ${status} - ${statusText}`);
+
 }

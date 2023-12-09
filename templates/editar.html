@@ -41,14 +41,43 @@
     </center>
 
     <script>
-        function updateContact() {
+        async function updateContact() {
             var nombreInput = document.getElementById("nombreInput");
             var telefonoInput = document.getElementById("telefonoInput");
             var emailInput = document.getElementById("emailInput");
             var email = emailInput.value;
             var telefono = telefonoInput.value;
             var nombre = nombreInput.value;
-            updateData(email, nombre, telefono);
+
+            verificar = await checarStatus();
+
+           
+
+            if (verificar.status === 200){
+                updateData(email, nombre, telefono);
+
+            } else if(verificar.status === 401){
+                window.location.href = "/sesion";
+                return alert("Token invalido");
+            } else {
+                return alert("Ocurrio un error");
+            }
+
+        }
+
+        function checarStatus(){
+            return fetch('http://127.0.0.1:8000/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+                }
+            });
+        }
+
+
+        function handleServerError(error) {
+            console.error('Error en la solicitud:', error.message || error.statusText);
+            document.getElementById('statusMessage').innerText = 'Error al procesar la solicitud';
         }
 
         async function checkServerStatus() {

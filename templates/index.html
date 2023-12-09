@@ -13,7 +13,6 @@
                 <a href="/buscar">Buscar</a>
                 <a href="/insertar">Insertar</a>
                 <p><a href="/sesion" id="sesionLink">Iniciar sesión</a></p>
-                <p><a href="/nuevo">Crear Cuenta</a></p>
             </div>
 
             <hr size="10" color="black">
@@ -34,15 +33,17 @@
             document.body.onload = getAll;
 
             document.addEventListener('DOMContentLoaded', function() {
+
+            const sesion = sessionStorage.getItem("token");
             var sesionLink = document.getElementById('sesionLink');
 
-            // Simula la condición de sesión abierta (puedes ajustar esto según tus necesidades)
-            var sesionAbierta = true;
-
-            if (sesionAbierta) {
+            if (sesion){
                 sesionLink.href = "/sesion";
                 sesionLink.textContent = "Cerrar sesión";
+
             }
+
+
         });
         </script>
     </body>

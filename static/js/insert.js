@@ -1,5 +1,13 @@
-function insertData(email, nombre, telefono) {
+const SERVER_URL = "http://localhost:8000";
+const ENDPOINT = "/contactos/"
+
+async function insertData(email, nombre, telefono) {
     const token = sessionStorage.getItem('token');
+    var data = {
+        email: email,
+        nombre: nombre,
+        telefono: telefono
+    };
 
     if (!token) {
         console.error('Token not found. Redirecting to login page.');
@@ -7,33 +15,67 @@ function insertData(email, nombre, telefono) {
         return;
     }
 
-    var request = new XMLHttpRequest();
-    var url = "http://localhost:8000/contactos/";
-    //var url = "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos"
+    try {
+        const respuestaServidorStatus = await checarStatus();
+        console.log(respuestaServidorStatus.status);
 
-    var data = {
-        email: email,
-        nombre: nombre,
-        telefono: telefono
-    };
+        if (respuestaServidorStatus.status === 200){
 
-    request.open('POST', url, true);
+            var respuestaContactos = await insertarContacto(data, token)
+            console.log(respuestaContactos.status);
+
+            if (respuestaContactos.status === 200){
+                window.location.href = "/";
+                return alert("Contacto ingresado correctamente");
+            } else {
+                manejarRespuestaError(respuestaContactos.status, respuestaContactos.statusText);
+            }
+
+        } else if (respuestaServidorStatus.status === 401){
+            window.location.href = "/sesion";
+            return alert("Token Invalido");
+        } else {
+            manejarRespuestaError(respuestaServidorStatus.status, respuestaServidorStatus.statusText)
+        }
+    } catch(error) {
+        console.error("Error", error);
+        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+    }
+
+
+}
+
+async function insertarContacto(data, token){
+    const request = new XMLHttpRequest();
+
+    if(!data){
+        console.log('Ocurrió un error');
+    }
+
+    request.open('POST', `${SERVER_URL}${ENDPOINT}`, true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.setRequestHeader('Authorization', `Bearer ${token}`);
 
-    request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-            if (request.status === 200) {
-                alert(request.responseText);
-                console.log(data)
+    return new Promise((resolve, reject) => {
+        request.onload = () => resolve(request)
+        request.onerror = (error) => reject(error);
+        request.send(JSON.stringify(data));
+        console.log(request)
+        
+    });
 
-                // Redirigir a la página principal (index.html)
-                window.location.href = '/';
-            } else {
-                handleErrorResponse(request.status, request.statusText);
-            }
+}
+
+function checarStatus(){
+    return fetch(`${SERVER_URL}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         }
-    }
+    });
+}
 
-    request.send(JSON.stringify(data));
+function manejarRespuestaError(status, statusText){
+    console.error(`Error: ${status} - ${statusText}`);
+
 }
