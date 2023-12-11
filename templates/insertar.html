@@ -43,7 +43,7 @@
         // Función para realizar una solicitud a la raíz del servidor
         async function checkServerStatus() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/', {
+                const response = await fetch('https://herokubackendsql-03fb6209ab45.herokuapp.com/', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')

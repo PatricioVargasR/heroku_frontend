@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = "https://herokubackendsql-03fb6209ab45.herokuapp.com";
 
 
 // Obtén el parámetro 'id' de la URL
@@ -46,7 +46,7 @@ function getContactById(email) {
 
     // Realiza una solicitud para obtener el registro por su ID, por ejemplo:
     const request = new XMLHttpRequest();
-    request.open('GET', "http://localhost:8000/contactos/" + email);
+    request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     //request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     request.setRequestHeader('Authorization', `Bearer ${token}`);
     request.send();

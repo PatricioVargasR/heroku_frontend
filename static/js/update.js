@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = "https://herokubackendsql-03fb6209ab45.herokuapp.com";
 const CONTACTS_ENDPOINT = "/actualizar_contactos"
 
 
@@ -47,7 +47,7 @@ function getContactById(email) {
 
     console.log(email);    
     const request = new XMLHttpRequest();
-    request.open('GET', "http://localhost:8000/contactos/" + email);
+    request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     request.setRequestHeader('Authorization', `Bearer ${token}`);
     request.onload = (e) => {
         if (request.status === 200) {

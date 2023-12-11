@@ -1,5 +1,5 @@
 // Obtén el parámetro 'id' de la URL
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = "https://herokubackendsql-03fb6209ab45.herokuapp.com";
 
 
 // Obtén el parámetro 'id' de la URL
@@ -48,7 +48,7 @@ function getContactById(email) {
     }
 
     const request = new XMLHttpRequest();
-    request.open('GET', "http://localhost:8000/contactos/" + email);
+    request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     //request.open('GET', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email);
     request.setRequestHeader('Authorization', `Bearer ${token}`);
     request.send();
@@ -82,7 +82,7 @@ function deleteData(email) {
     }
 
     const request = new XMLHttpRequest();
-    request.open('DELETE', "http://localhost:8000/contactos/" + email, true);
+    request.open('DELETE', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email, true);
     //request.open('DELETE', "https://herokubackendsql-03fb6209ab45.herokuapp.com/contactos/" + email, true);
     request.setRequestHeader('Authorization', `Bearer ${token}`);
 

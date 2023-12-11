@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = "https://herokubackendsql-03fb6209ab45.herokuapp.com";
 const ENDPOINT = "/contactos/"
 
 async function getForEmail(){
