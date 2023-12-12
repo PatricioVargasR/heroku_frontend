@@ -49,9 +49,12 @@
             var telefono = telefonoInput.value;
             var nombre = nombreInput.value;
 
-            verificar = await checarStatus();
+            if (email.trim() === '' || nombre.trim() === '' || telefono.trim() === '') {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
 
-           
+            verificar = await checarStatus();
 
             if (verificar.status === 200){
                 updateData(email, nombre, telefono);

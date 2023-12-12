@@ -18,7 +18,7 @@
             <p><label for="password">Password:</label>
             <input type="password" id="password" name="password" required></p>
             <p><button type="button" onclick="login()">Iniciar sesión</button></p>
-            <p><a href="/">Regresar</a></p>
+            <p><a href="/">Inicio</a></p>
             <hr size="10" color="black">
         </form>
     </div>
@@ -28,6 +28,7 @@
         <h1>Cerrar sesión</h1>
         <button type="button" onclick="logout()">Cerrar Sesión</button>
         <hr size="10" color="black">
+        <p><a href="/">Inicio</a></p>
     </div>
     </center>
 
@@ -86,6 +87,7 @@
                 window.location.href = '/';
             } else {
                 // Manejar el caso en el que la autenticación falla
+                alert("Error en la autenticación");
                 console.error('Error en la autenticación');
             }
         }

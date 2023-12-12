@@ -36,9 +36,16 @@
         async function searchContact() {
             var emailInput = document.getElementById("email");
             var email = emailInput.value;
-            await getForEmail(email);
-            // Limpiar el campo de entrada después de obtener el valor
-            emailInput.value = "";
+            if (email.trim() != '') {
+                await getForEmail(email);
+                // Limpiar el campo de entrada después de obtener el valor
+                emailInput.value = "";
+            } else {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+
+
         }
 
         async function checkServerStatus() {

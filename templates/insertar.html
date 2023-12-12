@@ -38,7 +38,15 @@
         var email = emailInput.value;
         var nombre = nombreInput.value;
         var telefono = telefonoInput.value;
-        insertData(email, nombre, telefono);
+            // Verificar si los campos están vacíos
+        if (email.trim() != '' && nombre.trim() != '' && telefono.trim() != '') {
+            insertData(email, nombre, telefono);
+        } else {
+            alert('Por favor, completa todos los campos');
+            return;
+        }
+
+
     }
         // Función para realizar una solicitud a la raíz del servidor
         async function checkServerStatus() {
