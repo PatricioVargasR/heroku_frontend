@@ -77,7 +77,7 @@
 
         function handleServerError(error) {
             console.error('Error en la solicitud:', error.message || error.statusText);
-            document.getElementById('statusMessage').innerText = 'Error al procesar la solicitud';
+            //document.getElementById('statusMessage').innerText = 'Error al procesar la solicitud';
         }
 
         async function checkServerStatus() {
@@ -94,15 +94,15 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
+                    //document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
                 } else {
                     const errorData = await response.json();
                     console.error('Error checking server status:', errorData);
-                    document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
+                    //document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('statusMessage').innerText = 'Error checking server status';
+                //document.getElementById('statusMessage').innerText = 'Error checking server status';
             }
         }
 

@@ -32,7 +32,7 @@ async function getAll() {
         }
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById('statusMessage').innerText = 'Error checking server status';
+        //document.getElementById('statusMessage').innerText = 'Error checking server status';
     }
 }
 

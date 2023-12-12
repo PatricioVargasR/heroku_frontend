@@ -28,15 +28,15 @@
                     }
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
+                    //document.getElementById('statusMessage').innerText = `Server response: ${data.message}`;
                 } else {
                     const errorData = await response.json();
                     console.error('Error checking server status:', errorData);
-                    document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
+                    //document.getElementById('statusMessage').innerText = `Error: ${errorData.message}`;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('statusMessage').innerText = 'Error checking server status';
+               // document.getElementById('statusMessage').innerText = 'Error checking server status';
             }
         }
 

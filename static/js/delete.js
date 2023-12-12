@@ -32,7 +32,7 @@ async function checarStatus(){
         }
     } catch (error) {
         console.error("Error", error);
-        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+        //document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
     }
 }
 

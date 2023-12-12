@@ -1,5 +1,5 @@
 const SERVER_URL = "https://herokubackendsql-03fb6209ab45.herokuapp.com";
-const ENDPOINT = "/contactos/"
+const ENDPOINT = "/contactos"
 
 async function insertData(email, nombre, telefono) {
     const token = sessionStorage.getItem('token');
@@ -39,7 +39,7 @@ async function insertData(email, nombre, telefono) {
         }
     } catch(error) {
         console.error("Error", error);
-        document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
+        //document.getElementById("statusMessage").innerHTML = "Error checando el estado del servidor";
     }
 
 
