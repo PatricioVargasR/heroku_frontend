@@ -49,9 +49,17 @@
             var telefono = telefonoInput.value;
             var nombre = nombreInput.value;
 
+
             if (email.trim() === '' || nombre.trim() === '' || telefono.trim() === '') {
                 alert('Por favor, completa todos los campos');
                 return;
+            } else {
+                // Validar el formato del número de teléfono
+                if (!validatePhoneNumber(telefono)) {
+                    alert('Por favor, ingresa un número de teléfono válido (10 dígitos numéricos)');
+                    return;
+                }
+
             }
 
             verificar = await checarStatus();
@@ -67,6 +75,13 @@
             }
 
         }
+
+        function validatePhoneNumber(phoneNumber) {
+            // Utilizar una expresión regular para validar que el número de teléfono tiene 10 dígitos numéricos
+            var phoneRegex = /^\d{10}$/;
+            return phoneRegex.test(phoneNumber);
+        }
+
 
         function checarStatus(){
             return fetch('https://herokubackendsql-03fb6209ab45.herokuapp.com/', {
